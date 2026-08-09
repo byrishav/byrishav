@@ -1,163 +1,831 @@
-<div align="center">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rishav Arya // dev.exe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-1:     #05060f;
+    --bg-2:     #0a0d20;
+    --bg-3:     #0f1330;
+    --panel:    #10142c;
+    --panel-2:  #141935;
+    --line:     rgba(0,229,255,0.24);
+    --line-soft:rgba(0,229,255,0.12);
+    --text-hi:  #f3f5ff;
+    --text-mid: #b7c0e6;
+    --text-dim: #8791ba;
+    --cyan:     #00e6ff;
+    --magenta:  #ff3fb0;
+    --lime:     #a6ff5c;
+    --amber:    #ffcc4d;
+    --disp: 'Space Grotesk', sans-serif;
+    --sans: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:6A5ACD,100:2E9EF7&height=200&section=header&text=Rishav%20Arya&fontSize=60&fontColor=fff&animation=fadeIn&fontAlignY=35&desc=Java%20%7C%20Spring%20Boot%20%7C%20React%20%7C%20Full%20Stack%20Developer&descAlignY=55&descSize=18" width="100%">
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  ::selection{ background:var(--cyan); color:#00131a; }
+  html{ scroll-behavior:smooth; }
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&pause=1000&color=6A5ACD&center=true&vCenter=true&width=600&lines=Full+Stack+Java+Developer;Spring+Boot+%7C+React.js+%7C+MySQL;Building+Enterprise-Grade+Systems;20%2C000%2B+Lines+of+Production+Java+Code" alt="Typing SVG" />
+  body{
+    background:linear-gradient(125deg, #05060f, #0a0d20, #0d1230, #08091c, #05060f);
+    background-size:320% 320%;
+    animation:bgShift 24s ease-in-out infinite;
+    color:var(--text-hi);
+    font-family:var(--sans);
+    overflow-x:hidden;
+  }
+  @keyframes bgShift{
+    0%{ background-position:0% 50%; }
+    50%{ background-position:100% 50%; }
+    100%{ background-position:0% 50%; }
+  }
 
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+    body{ background-position:0% 50% !important; }
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  img{ max-width:100%; display:block; }
+
+  /* ============ background layers ============ */
+  .bg-fixed{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+  #rainCanvas{ position:fixed; inset:0; z-index:0; opacity:0.5; }
+  .grid-overlay{
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(ellipse 85% 60% at 50% 15%, #000 25%, transparent 85%);
+    opacity:0.6;
+  }
+  .scanline{
+    position:fixed; left:0; right:0; height:2px; z-index:2;
+    background:linear-gradient(90deg, transparent, rgba(0,230,255,0.55), transparent);
+    animation:scan 8s linear infinite; pointer-events:none;
+  }
+  @keyframes scan{ 0%{ top:-2%; opacity:0; } 5%{ opacity:0.8; } 95%{ opacity:0.8; } 100%{ top:102%; opacity:0; } }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  /* ============ nav ============ */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:40;
+    display:flex; align-items:center; justify-content:space-between; padding:16px 6vw;
+    background:linear-gradient(180deg, rgba(5,6,15,0.92), rgba(5,6,15,0.55) 80%, transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{ font-family:var(--mono); font-weight:700; font-size:16px; color:var(--text-hi); display:flex; align-items:center; gap:8px; }
+  .logo .bracket{ color:var(--cyan); }
+  .nav-links{ display:flex; align-items:center; gap:28px; font-family:var(--mono); font-size:12px; letter-spacing:0.06em; }
+  .nav-links a{ color:var(--text-mid); position:relative; padding:4px 0; transition:color .2s; }
+  .nav-links a:not(.nav-cv)::before{ content:'>'; color:var(--cyan); opacity:0; margin-right:4px; transition:opacity .2s; }
+  .nav-links a:not(.nav-cv):hover{ color:var(--text-hi); }
+  .nav-links a:not(.nav-cv):hover::before{ opacity:1; }
+  .nav-cv{
+    border:1px solid var(--cyan); color:var(--cyan) !important; padding:9px 16px; border-radius:4px; font-weight:600;
+    transition:background .2s, color .2s;
+  }
+  .nav-cv:hover{ background:var(--cyan); color:#00131a !important; }
+  @media (max-width:860px){ .nav-links{ display:none; } }
+
+  /* ============ layout helpers ============ */
+  section{ position:relative; z-index:1; padding:13vh 6vw; max-width:1180px; margin:0 auto; }
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.24em; color:var(--cyan);
+    display:flex; align-items:center; gap:10px; margin-bottom:18px; text-transform:uppercase;
+  }
+  .eyebrow::before{ content:''; width:26px; height:1px; background:var(--cyan); }
+  .sec-title{
+    font-family:var(--disp); font-weight:700; font-size:clamp(30px,4.4vw,46px);
+    letter-spacing:-0.01em; margin-bottom:46px; color:var(--text-hi);
+  }
+  .sec-title .dim{ color:var(--text-mid); }
+  .reveal{ opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  .tech-logo{ width:19px; height:19px; flex-shrink:0; }
+
+  /* ============ hero ============ */
+  .hero{ min-height:100vh; display:flex; align-items:center; padding-top:14vh; padding-bottom:6vh; }
+  .hero-grid{ display:grid; grid-template-columns:1fr 0.82fr; gap:56px; align-items:center; width:100%; }
+  @media (max-width:940px){ .hero-grid{ grid-template-columns:1fr; } }
+
+  .boot-tag{
+    display:inline-flex; align-items:center; gap:8px; margin-bottom:22px;
+    font-family:var(--mono); font-size:12px; letter-spacing:0.14em; color:var(--lime);
+    border:1px solid rgba(166,255,92,0.35); background:rgba(166,255,92,0.06);
+    padding:6px 14px; border-radius:20px;
+  }
+  .boot-tag .dot2{ width:6px; height:6px; border-radius:50%; background:var(--lime); animation:pulseDot 1.6s ease-in-out infinite; }
+  @keyframes pulseDot{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
+
+  .name{
+    font-family:var(--disp); font-weight:700; letter-spacing:-0.015em;
+    font-size:clamp(46px, 7.6vw, 84px); line-height:0.98; color:var(--text-hi);
+    text-shadow:none; filter:none;
+  }
+  .name .last{
+    background:linear-gradient(100deg, var(--cyan), var(--magenta) 60%, var(--amber));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+
+  .role-line{ font-family:var(--mono); font-size:clamp(15px,2.2vw,19px); color:var(--text-mid); margin-top:18px; min-height:26px; }
+  .role-line .typed{ color:var(--cyan); }
+  .role-line .caret{ display:inline-block; width:9px; height:18px; background:var(--cyan); margin-left:2px; animation:blink 0.9s step-end infinite; vertical-align:middle; }
+
+  .bio-panel{
+    margin-top:26px; padding:20px 22px; max-width:560px;
+    background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--cyan);
+    border-radius:8px; backdrop-filter:blur(8px);
+  }
+  .bio-panel p{ color:var(--text-hi); font-size:15.5px; line-height:1.85; }
+  .bio-panel strong{ color:var(--cyan); font-weight:700; }
+  .bio-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .bio-tag{
+    font-family:var(--mono); font-size:11px; padding:5px 10px; border-radius:20px;
+    background:rgba(255,63,176,0.08); border:1px solid rgba(255,63,176,0.3); color:var(--magenta);
+  }
+
+  .hero-ctas{ display:flex; gap:16px; margin-top:30px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    padding:14px 24px; border-radius:4px; cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn-primary{ background:var(--cyan); color:#00131a; font-weight:700; border:1px solid var(--cyan); }
+  .btn-primary:hover{ box-shadow:0 0 26px rgba(0,230,255,0.5); transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; color:var(--text-hi); border:1px solid var(--line); }
+  .btn-ghost:hover{ border-color:var(--cyan); color:var(--cyan); transform:translateY(-2px); }
+
+  /* ---- hero photo ---- */
+  .photo-stage{ position:relative; display:flex; align-items:center; justify-content:center; height:460px; }
+  .holo-ring{ position:absolute; border-radius:50%; border:1px solid var(--line); }
+  .r1{ width:330px; height:330px; animation:spin 20s linear infinite; }
+  .r2{ width:394px; height:394px; border-style:dashed; border-color:rgba(255,63,176,0.28); animation:spin 30s linear infinite reverse; }
+  .r3{ width:268px; height:268px; border-color:rgba(166,255,92,0.25); animation:spin 14s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .photo-ring{
+    position:relative; width:270px; height:270px; border-radius:50%; z-index:2;
+    padding:5px;
+    background:conic-gradient(from 0deg, var(--cyan), var(--magenta), var(--amber), var(--cyan));
+    animation:ringSpin 8s linear infinite, floatY 5.5s ease-in-out infinite;
+  }
+  @keyframes ringSpin{ to{ transform:rotate(360deg); } }
+  @keyframes floatY{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-10px); } }
+  .photo-inner{
+    width:100%; height:100%; border-radius:50%; overflow:hidden; position:relative;
+    background:radial-gradient(circle at 35% 25%, #131a3a, var(--bg-1) 75%);
+    display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-1);
+  }
+  .photo-inner img{ width:100%; height:100%; object-fit:cover; object-position:center top; }
+  .photo-inner .initials{ font-family:var(--disp); font-weight:700; font-size:60px; color:var(--cyan); }
+  .photo-inner .scan{
+    position:absolute; left:0; right:0; height:2px; background:rgba(0,230,255,0.7);
+    animation:photoscan 3.2s linear infinite;
+  }
+  @keyframes photoscan{ 0%{ top:0; } 100%{ top:100%; } }
+
+  .name-tag{
+    position:absolute; bottom:-4px; left:50%; transform:translateX(-50%); z-index:4;
+    background:var(--bg-1); border:1px solid var(--cyan); border-radius:20px;
+    padding:8px 20px; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--cyan);
+    white-space:nowrap;
+  }
+
+  .orbit-chip{
+    position:absolute; font-family:var(--mono); font-size:11px; font-weight:700;
+    background:var(--panel); border:1px solid var(--line); padding:6px 12px 6px 8px; border-radius:20px;
+    color:var(--text-hi); animation:chipFloat 6s ease-in-out infinite;
+    display:flex; align-items:center; gap:7px;
+  }
+  @keyframes chipFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-8px); } }
+  .c1{ top:-2%; left:2%; animation-delay:0s; }
+  .c2{ top:16%; right:-6%; animation-delay:1s; }
+  .c3{ bottom:6%; left:-8%; animation-delay:2s; }
+  .c4{ bottom:-2%; right:6%; animation-delay:1.5s; }
+  .c5{ top:44%; left:-14%; animation-delay:0.6s; }
+  .c6{ top:44%; right:-16%; animation-delay:2.4s; }
+
+  /* ============ HUD ============ */
+  #hud{
+    position:fixed; top:96px; right:18px; z-index:50;
+    font-family:var(--mono); font-size:10px; letter-spacing:0.06em;
+    background:var(--panel); border:1px solid var(--line); backdrop-filter:blur(10px);
+    padding:10px 14px; border-radius:6px; color:var(--text-mid);
+    display:flex; flex-direction:column; gap:4px; min-width:158px;
+  }
+  #hud .dot{ display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--lime); margin-right:6px; animation:pulseDot 1.6s ease-in-out infinite; }
+  #hud .row{ display:flex; justify-content:space-between; gap:10px; }
+  #hud .val{ color:var(--cyan); }
+  @media (max-width:860px){ #hud{ display:none; } }
+
+  /* ============ about ============ */
+  .about-panel{ background:var(--panel); border:1px solid var(--line); border-radius:10px; backdrop-filter:blur(10px); overflow:hidden; }
+  .win-bar{ display:flex; align-items:center; gap:8px; padding:12px 16px; background:rgba(0,230,255,0.05); border-bottom:1px solid var(--line); font-family:var(--mono); font-size:11px; color:var(--text-mid); }
+  .win-dot{ width:9px; height:9px; border-radius:50%; }
+  .win-dot.r{ background:var(--magenta); } .win-dot.y{ background:var(--amber); } .win-dot.g{ background:var(--lime); }
+
+  .about-body{ padding:36px 32px; }
+  .about-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:28px; margin-top:6px; }
+  @media (max-width:760px){ .about-grid{ grid-template-columns:1fr; } }
+  .about-block h4{ font-family:var(--mono); font-size:12px; color:var(--lime); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px; }
+  .about-block p{ color:var(--text-mid); line-height:1.75; font-size:14.5px; }
+  .about-block strong{ color:var(--text-hi); }
+
+  /* ---- terminal stats (signature element) ---- */
+  .term-wrap{ margin-top:44px; }
+  .terminal{
+    background:#070914; border:1px solid var(--line); border-radius:10px; overflow:hidden;
+    font-family:var(--mono); font-size:13px; max-width:560px; margin:0 auto;
+  }
+  .terminal .win-bar .fname{ margin-left:6px; }
+  .term-body{ padding:22px 24px; color:var(--lime); line-height:2; }
+  .term-body .prompt{ color:var(--cyan); }
+  .term-body .path{ color:var(--magenta); }
+  .term-body .out{ color:var(--text-hi); }
+  .term-body .val{ color:var(--amber); font-weight:700; }
+  .term-cursor{ display:inline-block; width:8px; height:15px; background:var(--lime); margin-left:4px; animation:blink 0.9s step-end infinite; vertical-align:middle; }
+
+  /* ============ skills ============ */
+  .skills-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+  @media (max-width:760px){ .skills-grid{ grid-template-columns:1fr; } }
+  .skill-card{ background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow:hidden; transition:border-color .25s, transform .25s; }
+  .skill-card:hover{ border-color:var(--cyan); transform:translateY(-4px); }
+  .skill-card .win-bar .fname{ margin-left:6px; color:var(--text-mid); display:flex; align-items:center; gap:8px; }
+  .skill-body{ padding:20px 22px 24px; }
+  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{ font-family:var(--mono); font-size:11.5px; padding:6px 12px; border-radius:20px; background:rgba(0,230,255,0.07); border:1px solid var(--line); color:var(--text-mid); transition:all .2s; }
+  .chip:hover{ background:rgba(0,230,255,0.14); color:var(--cyan); border-color:var(--cyan); }
+
+  /* ============ projects ============ */
+  .project-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden;
+    margin-bottom:28px; transition:border-color .3s, transform .3s;
+  }
+  .project-card:hover{ border-color:var(--magenta); transform:translateY(-3px); }
+  .proj-inner{ display:grid; grid-template-columns:0.9fr 1.1fr; }
+  @media (max-width:820px){ .proj-inner{ grid-template-columns:1fr; } }
+
+  .proj-media{
+    position:relative; min-height:220px; background:
+      radial-gradient(circle at 30% 20%, rgba(255,63,176,0.22), transparent 55%),
+      radial-gradient(circle at 80% 80%, rgba(0,230,255,0.2), transparent 55%),
+      var(--bg-2);
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+    border-right:1px solid var(--line);
+  }
+  @media (max-width:820px){ .proj-media{ border-right:none; border-bottom:1px solid var(--line); min-height:180px; } }
+  .proj-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .proj-fallback{ text-align:center; padding:20px; position:relative; z-index:1; }
+  .proj-fallback .glyph{ font-family:var(--mono); font-size:13px; color:var(--text-mid); letter-spacing:0.08em; }
+  .idx-badge{
+    width:52px; height:52px; border-radius:50%; border:1px dashed var(--cyan); display:flex; align-items:center; justify-content:center;
+    font-family:var(--disp); font-weight:700; font-size:18px; color:var(--cyan); margin:0 auto 10px;
+  }
+
+  .proj-term{ padding:26px 28px; }
+  .proj-title{ font-family:var(--disp); font-weight:700; font-size:21px; color:var(--text-hi); margin-bottom:10px; }
+  .proj-desc{ color:var(--text-mid); font-size:14px; line-height:1.75; margin-bottom:14px; }
+  .proj-desc li{ margin-bottom:4px; padding-left:16px; position:relative; }
+  .proj-desc li::before{ content:'▸'; position:absolute; left:0; color:var(--cyan); }
+  .proj-code{ font-family:var(--mono); font-size:11.5px; background:#070a15; border:1px solid var(--line); border-radius:6px; padding:12px 14px; color:var(--lime); margin-bottom:16px; overflow-x:auto; }
+  .proj-links{ display:flex; gap:14px; flex-wrap:wrap; }
+  .proj-links a{ font-family:var(--mono); font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-mid); border:1px solid var(--line); padding:9px 16px; border-radius:4px; transition:.2s; }
+  .proj-links a:hover{ color:#00131a; background:var(--cyan); border-color:var(--cyan); }
+
+  /* ============ achievements & certs ============ */
+  .achieve-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:60px; }
+  @media (max-width:820px){ .achieve-grid{ grid-template-columns:1fr; } }
+  .achieve-card{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:24px; transition:transform .25s, border-color .25s; }
+  .achieve-card:hover{ transform:translateY(-4px); border-color:var(--amber); }
+  .achieve-card .ic{ font-family:var(--mono); font-weight:800; font-size:22px; color:var(--amber); margin-bottom:12px; }
+  .achieve-card p{ color:var(--text-mid); font-size:14px; line-height:1.6; }
+  .achieve-card strong{ color:var(--text-hi); }
+
+  .cert-list{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  @media (max-width:700px){ .cert-list{ grid-template-columns:1fr; } }
+  .cert-item{
+    display:flex; align-items:center; gap:12px; background:var(--panel); border:1px solid var(--line);
+    border-radius:8px; padding:14px 16px; font-family:var(--mono); font-size:12.5px; color:var(--text-mid);
+  }
+  .cert-item .bullet{ width:7px; height:7px; border-radius:50%; background:var(--lime); flex-shrink:0; }
+  .cert-item strong{ color:var(--text-hi); }
+
+  /* ============ contact ============ */
+  .contact-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  @media (max-width:820px){ .contact-grid{ grid-template-columns:1fr; } }
+  .contact-card{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:24px; text-align:left; cursor:pointer; transition:transform .25s, border-color .25s; }
+  .contact-card:hover{ transform:translateY(-4px); border-color:var(--lime); }
+  .contact-card .label{ font-family:var(--mono); font-size:11px; color:var(--text-mid); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px; }
+  .contact-card .value{ font-family:var(--disp); font-weight:600; font-size:14.5px; color:var(--text-hi); word-break:break-word; }
+  .copied-tag{ font-family:var(--mono); font-size:10px; color:var(--lime); margin-top:8px; opacity:0; transition:opacity .2s; }
+  .copied-tag.show{ opacity:1; }
+
+  footer{ text-align:center; padding:40px 6vw 60px; font-family:var(--mono); font-size:11px; color:var(--text-mid); letter-spacing:0.08em; position:relative; z-index:1; }
+  footer .up{ color:var(--cyan); }
+
+  .setup-note{ max-width:1180px; margin:0 auto; padding:0 6vw 8vh; position:relative; z-index:1; }
+  .setup-note .box{
+    border:1px dashed rgba(255,204,77,0.4); background:rgba(255,204,77,0.05); border-radius:8px;
+    padding:16px 18px; font-family:var(--mono); font-size:12px; color:var(--amber); line-height:1.8;
+  }
+</style>
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="ico-java" viewBox="0 0 64 64"><path d="M22 40c-4 3-4 7 3 9 9 3 22 2 28-2-1 3-4 5-8 6-9 3-22 2-27-3-3-3-2-7 4-10z" fill="none" stroke="#00e6ff" stroke-width="3" stroke-linecap="round"/><path d="M28 8c4 4-4 7-4 12 0 4 5 6 5 6" fill="none" stroke="#00e6ff" stroke-width="3" stroke-linecap="round"/><ellipse cx="32" cy="36" rx="15" ry="6" fill="none" stroke="#00e6ff" stroke-width="3"/></symbol>
+  <symbol id="ico-js" viewBox="0 0 64 64"><rect x="4" y="4" width="56" height="56" rx="10" fill="#f7df1e"/><text x="32" y="42" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="22" fill="#1a1a1a">JS</text></symbol>
+  <symbol id="ico-react" viewBox="0 0 64 64"><circle cx="32" cy="32" r="5" fill="#a6ff5c"/><g fill="none" stroke="#a6ff5c" stroke-width="2.6"><ellipse cx="32" cy="32" rx="25" ry="10"/><ellipse cx="32" cy="32" rx="25" ry="10" transform="rotate(60 32 32)"/><ellipse cx="32" cy="32" rx="25" ry="10" transform="rotate(120 32 32)"/></g></symbol>
+  <symbol id="ico-spring" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="#6db33f" stroke-width="3"/><path d="M20 40c8-14 22-16 26-24 2 10-2 20-12 26-8 5-18 4-22-2 3 2 6 2 8 0z" fill="#6db33f"/></symbol>
+  <symbol id="ico-sql" viewBox="0 0 64 64"><ellipse cx="32" cy="14" rx="22" ry="8" fill="none" stroke="#ff3fb0" stroke-width="3"/><path d="M10 14v18c0 4.4 9.8 8 22 8s22-3.6 22-8V14" fill="none" stroke="#ff3fb0" stroke-width="3"/><path d="M10 32v18c0 4.4 9.8 8 22 8s22-3.6 22-8V32" fill="none" stroke="#ff3fb0" stroke-width="3"/></symbol>
+  <symbol id="ico-git" viewBox="0 0 64 64"><circle cx="18" cy="46" r="6" fill="none" stroke="#ffcc4d" stroke-width="3"/><circle cx="18" cy="16" r="6" fill="none" stroke="#ffcc4d" stroke-width="3"/><circle cx="44" cy="30" r="6" fill="none" stroke="#ffcc4d" stroke-width="3"/><path d="M18 22v18M18 22c0 8 8 8 20 8" fill="none" stroke="#ffcc4d" stroke-width="3"/></symbol>
+</svg>
+
+<canvas id="rainCanvas"></canvas>
+<div class="bg-fixed grid-overlay"></div>
+<div class="scanline"></div>
+
+<div id="hud">
+  <div class="row"><span><span class="dot"></span>STATUS</span><span class="val">ONLINE</span></div>
+  <div class="row"><span>UPTIME</span><span class="val" id="uptime">00:00:00</span></div>
+  <div class="row"><span>MODULES</span><span class="val">20+ LOADED</span></div>
+  <div class="row"><span>RANK_GFG</span><span class="val">#1 KOLHAN</span></div>
 </div>
 
-<img src="https://user-images.githubusercontent.com/74038190/212284115-f47cd8ff-2ffb-4b04-b5bf-4d1c14c0247f.gif" width="100%">
+<nav>
+  <div class="logo"><span class="bracket">&lt;</span>Rishav<span class="bracket">/</span>Arya<span class="bracket">&gt;</span></div>
+  <div class="nav-links">
+    <a href="#about">about</a>
+    <a href="#skills">stack</a>
+    <a href="#projects">builds</a>
+    <a href="#achievements">achievements</a>
+    <a href="#contact">uplink</a>
+    <a class="nav-cv" href="Rishav_Arya_CV.pdf" download>Resume ↓</a>
+  </div>
+</nav>
 
-<div align="center">
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="boot-tag"><span class="dot2"></span>SYSTEM_PROFILE // ACTIVE</div>
+      <h1 class="name">RISHAV<br><span class="last">ARYA</span></h1>
+      <div class="role-line">&gt; <span class="typed" id="typedRole"></span><span class="caret"></span></div>
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](#)
-[![Portfolio](https://img.shields.io/badge/Portfolio-6A5ACD?style=for-the-badge&logo=vercel&logoColor=white)](#)
-[![LeetCode](https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black)](#)
-[![GeeksforGeeks](https://img.shields.io/badge/GeeksforGeeks-2F8D46?style=for-the-badge&logo=geeksforgeeks&logoColor=white)](#)
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](#)
+      <div class="bio-panel">
+        <p>
+          BCA graduate (2022–2026) from Karim City College, Jamshedpur, engineering
+          <strong>full-stack Java systems</strong> — from Spring Boot + React apps to
+          JDBC-driven enterprise ERPs. Shipped <strong>20,000+ lines of Java</strong> across
+          <strong>20+ live modules</strong>, solved <strong>150+ DSA problems</strong>, and
+          currently sit <strong>#1 on GeeksforGeeks across Kolhan University</strong>.
+        </p>
+        <div class="bio-tags">
+          <span class="bio-tag">Jamshedpur, Jharkhand</span>
+          <span class="bio-tag">Open to SDE / Java Developer roles</span>
+        </div>
+      </div>
 
-<img src="https://komarev.com/ghpvc/?username=RishavArya&style=for-the-badge&color=6A5ACD" alt="Profile views" />
+      <div class="hero-ctas">
+        <a href="#projects" class="btn btn-primary">View Deployed Builds</a>
+        <a href="Rishav_Arya_CV.pdf" download class="btn btn-ghost">Download Résumé</a>
+      </div>
+    </div>
 
+    <div class="photo-stage">
+      <div class="holo-ring r2"></div>
+      <div class="holo-ring r1"></div>
+      <div class="holo-ring r3"></div>
+
+      <div class="photo-ring">
+        <div class="photo-inner">
+          <div class="scan"></div>
+          <img src="my-photo.jpeg" alt="Rishav Arya"
+               onerror="this.style.display='none'; this.parentElement.querySelector('.initials').style.display='flex';">
+          <div class="initials" style="display:flex;">RA</div>
+        </div>
+        <div class="name-tag">RISHAV ARYA · DEV</div>
+      </div>
+
+      <div class="orbit-chip c1"><svg class="tech-logo"><use href="#ico-java"/></svg>Java</div>
+      <div class="orbit-chip c2"><svg class="tech-logo"><use href="#ico-spring"/></svg>Spring Boot</div>
+      <div class="orbit-chip c3"><svg class="tech-logo"><use href="#ico-react"/></svg>React.js</div>
+      <div class="orbit-chip c4"><svg class="tech-logo"><use href="#ico-sql"/></svg>MySQL</div>
+      <div class="orbit-chip c5"><svg class="tech-logo"><use href="#ico-js"/></svg>JavaScript</div>
+      <div class="orbit-chip c6"><svg class="tech-logo"><use href="#ico-git"/></svg>Git</div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="eyebrow">01 // system_profile</div>
+  <h2 class="sec-title">Building reliable systems, <span class="dim">one module at a time.</span></h2>
+
+  <div class="about-panel reveal">
+    <div class="win-bar"><span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span><span class="fname">about.log</span></div>
+    <div class="about-body">
+      <div class="about-grid">
+        <div class="about-block">
+          <h4>Education</h4>
+          <p><strong>BCA — Karim City College</strong><br>Sakchi, Jamshedpur · 2022 – 2026<br>CGPA: 66.27%</p>
+        </div>
+        <div class="about-block">
+          <h4>Experience</h4>
+          <p><strong>Java Developer Intern</strong><br>Agamya Eduventure · Remote · Dec 2025 – Jan 2026<br>Led an enterprise Nursing Home Automation System — modular architecture, secure JDBC CRUD, automated GST billing and refund workflows across 20+ modules.</p>
+        </div>
+        <div class="about-block">
+          <h4>How I Build</h4>
+          <p>Layered Controller–Service–Repository architecture, RESTful APIs, DTOs, global exception handling and input validation baked into every module — correctness first, then ship.</p>
+        </div>
+        <div class="about-block">
+          <h4>Currently Compiling</h4>
+          <p>Spring Security, JWT & role-based auth, Swagger/OpenAPI documentation, and deepening Spring Data JPA + Hibernate for production-grade REST services.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="term-wrap">
+    <div class="terminal reveal">
+      <div class="win-bar"><span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span><span class="fname">stats.sh — output</span></div>
+      <div class="term-body">
+        <div><span class="prompt">$</span> ./run_stats.sh</div>
+        <div><span class="out">lines_of_java</span> ...... <span class="val" data-count="20" data-suffix="K+">0</span></div>
+        <div><span class="out">modules_shipped</span> .... <span class="val" data-count="20" data-suffix="+">0</span></div>
+        <div><span class="out">dsa_solved</span> ......... <span class="val" data-count="150" data-suffix="+">0</span></div>
+        <div><span class="out">gfg_rank_kolhan</span> ..... <span class="val">#1</span></div>
+        <div><span class="path">~/rishav-arya</span> <span class="term-cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills">
+  <div class="eyebrow">02 // stack_registry</div>
+  <h2 class="sec-title">Tools compiled <span class="dim">into muscle memory.</span></h2>
+
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="win-bar"><span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span><span class="fname"><svg class="tech-logo"><use href="#ico-java"/></svg>languages.core</span></div>
+      <div class="skill-body">
+        <div class="chip-row">
+          <span class="chip">Java</span><span class="chip">SQL</span><span class="chip">JavaScript</span>
+          <span class="chip">HTML5</span><span class="chip">CSS3</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="win-bar"><span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span><span class="fname"><svg class="tech-logo"><use href="#ico-spring"/></svg>backend.service</span></div>
+      <div class="skill-body">
+        <div class="chip-row">
+          <span class="chip">Spring Boot</span><span class="chip">Spring MVC</span><span class="chip">REST APIs</span>
+          <span class="chip">JDBC</span><span class="chip">Spring Data JPA</span><span class="chip">Hibernate</span>
+          <span class="chip">CRUD Ops</span><span class="chip">JSON</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="win-bar"><span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span><span class="fname"><svg class="tech-logo"><use href="#ico-react"/></svg>frontend.ui</span></div>
+      <div class="skill-body">
+        <div class="chip-row">
+          <span class="chip">React.js</span><span class="chip">React Hooks</span><span class="chip">React Router</span>
+          <span class="chip">Axios</span><span class="chip">JavaScript</span><span class="chip">HTML5</span>
+          <span class="chip">CSS3</span><span class="chip">Bootstrap</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="win-bar"><span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span><span class="fname">security.auth</span></div>
+      <div class="skill-body">
+        <div class="chip-row">
+          <span class="chip">Spring Security</span><span class="chip">JWT</span><span class="chip">Authentication</span>
+          <span class="chip">Authorization</span><span class="chip">RBAC</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="win-bar"><span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span><span class="fname"><svg class="tech-logo"><use href="#ico-sql"/></svg>database.sql</span></div>
+      <div class="skill-body">
+        <div class="chip-row">
+          <span class="chip">MySQL</span><span class="chip">SQL</span><span class="chip">RDBMS</span>
+          <span class="chip">MS Access</span><span class="chip">DB Design</span><span class="chip">JPA / Hibernate</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="win-bar"><span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span><span class="fname"><svg class="tech-logo"><use href="#ico-java"/></svg>core-java.oop</span></div>
+      <div class="skill-body">
+        <div class="chip-row">
+          <span class="chip">OOP</span><span class="chip">Collections Framework</span><span class="chip">Exception Handling</span>
+          <span class="chip">Multithreading</span><span class="chip">Generics</span><span class="chip">Java 8</span>
+          <span class="chip">File Handling</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="win-bar"><span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span><span class="fname"><svg class="tech-logo"><use href="#ico-git"/></svg>tools.env</span></div>
+      <div class="skill-body">
+        <div class="chip-row">
+          <span class="chip">Maven</span><span class="chip">Git</span><span class="chip">GitHub</span>
+          <span class="chip">IntelliJ IDEA</span><span class="chip">Eclipse</span><span class="chip">VS Code</span>
+          <span class="chip">Postman</span><span class="chip">Swagger / OpenAPI</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="win-bar"><span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span><span class="fname">core.concepts</span></div>
+      <div class="skill-body">
+        <div class="chip-row">
+          <span class="chip">Data Structures & Algorithms</span><span class="chip">DBMS</span>
+          <span class="chip">Operating Systems</span><span class="chip">SDLC</span>
+          <span class="chip">Layered Architecture</span><span class="chip">Debugging</span><span class="chip">Problem Solving</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects">
+  <div class="eyebrow">03 // deployed_builds</div>
+  <h2 class="sec-title">Systems shipped, <span class="dim">not just prototyped.</span></h2>
+
+  <div class="project-card reveal">
+    <div class="proj-inner">
+      <div class="proj-media">
+        <img src="project-hospital.jpg" alt="Hospital Management System screenshot"
+             onerror="this.style.display='none'; this.parentElement.querySelector('.proj-fallback').style.display='block';">
+        <div class="proj-fallback" style="display:none;">
+          <div class="idx-badge">01</div>
+          <div class="glyph">// preview pending — drop project-hospital.jpg here</div>
+        </div>
+      </div>
+      <div class="proj-term">
+        <div class="win-bar" style="margin:-26px -28px 18px; border-radius:0;"><span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span><span class="fname">hospital_management.run</span></div>
+        <div class="proj-title">Hospital Management System</div>
+        <ul class="proj-desc">
+          <li>Full-stack app with Java, Spring Boot, React.js, MySQL, Spring Data JPA and Hibernate — layered Controller–Service–Repository architecture.</li>
+          <li>RESTful APIs for patient, doctor, appointment and billing management with JSON-based CRUD.</li>
+          <li>React frontend (Hooks, Router, Axios) for scheduling, billing and admin workflows, plus JWT auth and role-based access control.</li>
+          <li>Invoice generation, payment tracking; endpoints documented and tested with Postman & Swagger/OpenAPI.</li>
+        </ul>
+        <div class="proj-code">$ <span style="color:var(--magenta)">stack</span> --list<br>&gt; Java, Spring Boot, React.js, MySQL, JPA, Hibernate, Spring Security, JWT</div>
+        <div class="proj-links"><a href="#contact">Request Walkthrough</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-card reveal">
+    <div class="proj-inner">
+      <div class="proj-media">
+        <img src="p1.jpg" alt="Nursing Home Automation System screenshot"
+             onerror="this.style.display='none'; this.parentElement.querySelector('.proj-fallback').style.display='block';">
+        <div class="proj-fallback" style="display:none;">
+          <div class="idx-badge">02</div>
+          <div class="glyph">// preview pending — drop p1.jpg here</div>
+        </div>
+      </div>
+      <div class="proj-term">
+        <div class="win-bar" style="margin:-26px -28px 18px; border-radius:0;"><span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span><span class="fname">nursing_home_erp.run</span></div>
+        <div class="proj-title">Nursing Home Automation & Management System</div>
+        <ul class="proj-desc">
+          <li>Enterprise healthcare ERP — 20+ modules, 20,000+ lines of object-oriented Java.</li>
+          <li>Patient management, laboratory diagnostics, dynamic ward/bed allocation, billing, inventory, revenue analytics and printable reports.</li>
+          <li>Automated GST billing, refund processing, authentication, validation and exception handling throughout.</li>
+        </ul>
+        <div class="proj-code">$ <span style="color:var(--magenta)">stack</span> --list<br>&gt; Java Core & Advanced, JDBC, SQL, Swing, AWT, MS Access</div>
+        <div class="proj-links"><a href="#contact">Request Walkthrough</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-card reveal">
+    <div class="proj-inner">
+      <div class="proj-media">
+        <img src="project-sargam-biterush.jpg" alt="Sargam and BiteRush screenshot"
+             onerror="this.style.display='none'; this.parentElement.querySelector('.proj-fallback').style.display='block';">
+        <div class="proj-fallback" style="display:none;">
+          <div class="idx-badge">03</div>
+          <div class="glyph">// preview pending — drop project-sargam-biterush.jpg here</div>
+        </div>
+      </div>
+      <div class="proj-term">
+        <div class="win-bar" style="margin:-26px -28px 18px; border-radius:0;"><span class="win-dot r"></span><span class="win-dot y"></span><span class="win-dot g"></span><span class="fname">sargam_biterush.app</span></div>
+        <div class="proj-title">Sargam & BiteRush — Multimedia & Food Ordering Platforms</div>
+        <ul class="proj-desc">
+          <li>Spotify-inspired streaming platform and Zomato-inspired food ordering app, both fully responsive.</li>
+          <li>Authentication, search, playlist / menu management, cart functionality and order workflows.</li>
+          <li>Dynamic UI interactions, media controls and client-side state handling via DOM manipulation, arrays and objects.</li>
+        </ul>
+        <div class="proj-code">$ <span style="color:var(--magenta)">stack</span> --list<br>&gt; HTML5, CSS3, JavaScript, Bootstrap</div>
+        <div class="proj-links">
+          <a href="https://byrishav.github.io/Sargam/" target="_blank" rel="noopener">Sargam — Live Preview</a>
+          <a href="https://byrishav.github.io/BiteRush/" target="_blank" rel="noopener">BiteRush — Live Preview</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACHIEVEMENTS + CERTS ============ -->
+<section id="achievements">
+  <div class="eyebrow">04 // achievements_log</div>
+  <h2 class="sec-title">Milestones <span class="dim">on record.</span></h2>
+
+  <div class="achieve-grid">
+    <div class="achieve-card reveal"><div class="ic">#1</div><p><strong>Ranked #1 on GeeksforGeeks</strong> among students of Kolhan University.</p></div>
+    <div class="achieve-card reveal"><div class="ic">150+</div><p><strong>150+ DSA problems solved</strong> across LeetCode and GeeksforGeeks.</p></div>
+    <div class="achieve-card reveal"><div class="ic">20K+</div><p>Built and maintained enterprise healthcare applications spanning <strong>20+ modules and 20,000+ lines</strong> of Java code.</p></div>
+  </div>
+
+  <div class="eyebrow">05 // certifications</div>
+  <div class="cert-list">
+    <div class="cert-item reveal"><span class="bullet"></span><span><strong>Responsive Web Design</strong> — freeCodeCamp</span></div>
+    <div class="cert-item reveal"><span class="bullet"></span><span><strong>Postman API Fundamentals</strong> — Student Expert</span></div>
+    <div class="cert-item reveal"><span class="bullet"></span><span><strong>HackerRank</strong> — Java (Basic), SQL (Basic & Intermediate)</span></div>
+    <div class="cert-item reveal"><span class="bullet"></span><span><strong>HackerRank</strong> — Problem Solving (Basic & Intermediate)</span></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="eyebrow">06 // establish_uplink</div>
+  <h2 class="sec-title">Let's compile <span class="dim">something together.</span></h2>
+
+  <div class="contact-grid">
+    <div class="contact-card" data-copy="+91 9229176295">
+      <div class="label">Phone</div>
+      <div class="value">+91 92291 76295</div>
+      <div class="copied-tag">✓ copied to clipboard</div>
+    </div>
+    <div class="contact-card" data-copy="rishuarya0604@gmail.com">
+      <div class="label">Email</div>
+      <div class="value">rishuarya0604@gmail.com</div>
+      <div class="copied-tag">✓ copied to clipboard</div>
+    </div>
+    <div class="contact-card">
+      <div class="label">Location</div>
+      <div class="value">Jamshedpur, Jharkhand, India</div>
+    </div>
+    <a class="contact-card" href="https://linkedin.com/in/rishavarya-dev" target="_blank" rel="noopener">
+      <div class="label">LinkedIn</div>
+      <div class="value">linkedin.com/in/rishavarya-dev</div>
+    </a>
+    <a class="contact-card" href="https://github.com/byrishav" target="_blank" rel="noopener">
+      <div class="label">GitHub</div>
+      <div class="value">github.com/byrishav</div>
+    </a>
+    <a class="contact-card" href="Rishav_Arya_CV.pdf" download>
+      <div class="label">Résumé</div>
+      <div class="value">Download PDF ↓</div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span class="up">rishav_arya</span> // portfolio_os v3.0 — compiled with Java, caffeine and curiosity.
+</footer>
+
+<div class="setup-note">
+  <div class="box">
+    // SETUP_NOTE: this file auto-detects local images — just save these next to the html file and refresh, no code edits needed:<br>
+    &nbsp;&nbsp;my-photo.jpeg → your hero photo (circular frame)<br>
+    &nbsp;&nbsp;project-hospital.jpg → Hospital Management System screenshot<br>
+    &nbsp;&nbsp;p1.jpg → Nursing Home ERP screenshot<br>
+    &nbsp;&nbsp;project-sargam-biterush.jpg → Sargam / BiteRush screenshot<br>
+    Rishav_Arya_CV.pdf is already bundled alongside this file for the Resume buttons.
+  </div>
 </div>
 
-<br>
+<script>
+/* ---------- HUD uptime ---------- */
+(function(){
+  var start = Date.now();
+  var el = document.getElementById('uptime');
+  setInterval(function(){
+    var s = Math.floor((Date.now()-start)/1000);
+    var hh = String(Math.floor(s/3600)).padStart(2,'0');
+    var mm = String(Math.floor((s%3600)/60)).padStart(2,'0');
+    var ss = String(s%60).padStart(2,'0');
+    el.textContent = hh+':'+mm+':'+ss;
+  }, 1000);
+})();
 
-## 🚀 About Me <img src="https://user-images.githubusercontent.com/74038190/216120981-b9507c36-0e04-4469-8e27-c99271b45ba5.png" width="30">
+/* ---------- typed rotating role ---------- */
+(function(){
+  var roles = ['Full-Stack Java Developer', 'Spring Boot & React Engineer', 'Backend Systems Architect', 'DSA Problem Solver'];
+  var el = document.getElementById('typedRole');
+  var r = 0, c = 0, deleting = false;
+  function tick(){
+    var word = roles[r];
+    if(!deleting){
+      c++; el.textContent = word.slice(0, c);
+      if(c === word.length){ deleting = true; setTimeout(tick, 1400); return; }
+    } else {
+      c--; el.textContent = word.slice(0, c);
+      if(c === 0){ deleting = false; r = (r+1) % roles.length; }
+    }
+    setTimeout(tick, deleting ? 30 : 55);
+  }
+  setTimeout(tick, 600);
+})();
 
-<img align="right" src="https://user-images.githubusercontent.com/74038190/213844263-a8897a51-32f4-4b3b-b5c2-e1528b89f6f3.gif" width="380">
+/* ---------- scroll reveal ---------- */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){ entry.target.classList.add('in-view'); io.unobserve(entry.target); }
+    });
+  }, { threshold:0.12, rootMargin:'0px 0px -60px 0px' });
+  els.forEach(function(el){ io.observe(el); });
+})();
 
-- 🎓 Pursuing **BCA** at Karim City College, Kolhan University, Jamshedpur
-- ☕ **Java Developer Intern** at Agamya Eduventure — built a 20,000+ line healthcare ERP system
-- 💻 Full Stack Developer specializing in **Java, Spring Boot & React.js**
-- 🏆 Ranked **#1 on GeeksforGeeks** among Kolhan University students
-- 📊 Solved **150+ DSA problems** across LeetCode and GeeksforGeeks
-- 🌱 Currently deepening expertise in **Spring Security, JWT & Microservices**
-- ⚡ Fun fact: I turn hospital chaos into clean, layered architecture
+/* ---------- terminal counters ---------- */
+(function(){
+  var stats = document.querySelectorAll('.term-body .val[data-count]');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      var el = entry.target;
+      var target = parseInt(el.getAttribute('data-count'), 10);
+      var suffix = el.getAttribute('data-suffix') || '';
+      var cur = 0;
+      var step = Math.max(1, Math.round(target/36));
+      var iv = setInterval(function(){
+        cur += step;
+        if(cur >= target){ cur = target; clearInterval(iv); }
+        el.textContent = cur + suffix;
+      }, 30);
+      io.unobserve(el);
+    });
+  }, { threshold:0.4 });
+  stats.forEach(function(el){ io.observe(el); });
+})();
 
-<br clear="right">
+/* ---------- copy to clipboard ---------- */
+(function(){
+  document.querySelectorAll('[data-copy]').forEach(function(card){
+    card.addEventListener('click', function(){
+      var text = card.getAttribute('data-copy');
+      var tag = card.querySelector('.copied-tag');
+      navigator.clipboard && navigator.clipboard.writeText(text).then(function(){
+        tag.classList.add('show');
+        setTimeout(function(){ tag.classList.remove('show'); }, 1600);
+      });
+    });
+  });
+})();
 
-## 🛠️ Tech Stack <img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="30">
-
-<div align="center">
-
-**Languages & Core**
-
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-
-**Backend**
-
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
-![Spring Security](https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white)
-![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
-
-**Frontend**
-
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
-
-**Database & Tools**
-
-![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
-![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
-![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-000000?style=for-the-badge&logo=intellijidea&logoColor=white)
-![VS Code](https://img.shields.io/badge/VS_Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white)
-
-</div>
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
-## 💼 Featured Projects <img src="https://user-images.githubusercontent.com/74038190/216122069-5b8169d7-1d8e-4a13-b245-a8e4176c99f8.png" width="30">
-
-<table>
-<tr>
-<td width="50%" valign="top">
-
-### 🏥 Hospital Management System
-**Java · Spring Boot · React.js · MySQL · JPA · Hibernate**
-
-Full-stack HMS with layered Controller-Service-Repository architecture. Features RESTful APIs, JWT authentication, role-based authorization, and a React frontend for patient, appointment & billing management.
-
-`Spring Security` `REST APIs` `Swagger` `Maven`
-
-</td>
-<td width="50%" valign="top">
-
-### 🩺 Nursing Home Automation System
-**Java · JDBC · SQL · Java Swing · AWT · MS Access**
-
-Enterprise healthcare ERP with 20+ modules and 20,000+ lines of Java code — patient management, lab diagnostics, bed allocation, automated GST billing, and revenue analytics.
-
-`JDBC` `PreparedStatement` `Exception Handling`
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### 🎵 Sargam
-**HTML5 · CSS3 · JavaScript · Bootstrap**
-
-Responsive multimedia streaming platform with authentication, search, and playlist management using vanilla JS and DOM manipulation.
-
-</td>
-<td width="50%" valign="top">
-
-### 🍔 BiteRush
-**HTML5 · CSS3 · JavaScript · Bootstrap**
-
-Food ordering platform with dynamic cart functionality, quantity management, and client-side state handling.
-
-</td>
-</tr>
-</table>
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
-## 📊 GitHub Stats <img src="https://user-images.githubusercontent.com/74038190/216122041-518ac897-8d92-4c6b-9b3f-ca01dcaf38ee.png" width="30">
-
-<div align="center">
-
-<img src="https://github-readme-stats.vercel.app/api?username=RishavArya&show_icons=true&theme=tokyonight&hide_border=true&border_radius=10&count_private=true" width="48%" />
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=RishavArya&theme=tokyonight&hide_border=true&border_radius=10" width="48%" />
-
-<br>
-
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=RishavArya&layout=compact&theme=tokyonight&hide_border=true&border_radius=10" width="48%" />
-
-</div>
-
-## 📈 Contribution Graph
-
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=RishavArya&theme=tokyo-night&hide_border=true&bg_color=00000000&color=2E9EF7&line=9C27B0&point=FF6C37" width="100%"/>
-</p>
-
-## 🏆 Achievements <img src="https://user-images.githubusercontent.com/74038190/216122069-5b8169d7-1d8e-4a13-b245-a8e4176c99f8.png" width="30">
-
-<div align="center">
-
-| 🥇 | Ranked **#1 on GeeksforGeeks** among Kolhan University students |
-|---|---|
-| 🧩 | Solved **150+ DSA problems** on LeetCode & GeeksforGeeks |
-| 🏗️ | Built enterprise apps with **20+ modules, 20,000+ lines** of Java |
-| 📜 | **freeCodeCamp** — Responsive Web Design Certified |
-| 📜 | **HackerRank** — Java, SQL, Problem Solving Certified |
-| 📜 | **Postman API Fundamentals** Student Expert |
-
-</div>
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
-
-<div align="center">
-  <h3>💬 Let's build something great together!</h3>
-  <p>Open to internships, collaborations, and full-stack Java opportunities.</p>
-</div>
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:2E9EF7,100:6A5ACD&height=100&section=footer" width="100%"/>
+/* ---------- digital rain particle canvas ---------- */
+(function(){
+  var canvas = document.getElementById('rainCanvas');
+  var ctx = canvas.getContext('2d');
+  var w, h, drops = [];
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var chars = '01アリシャブ{}<>/;JAVA';
+  function resize(){ w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  var colW = 22;
+  var cols = reduced ? 0 : Math.floor(w / colW);
+  for(var i=0;i<cols;i++){
+    drops.push({ x:i*colW, y:Math.random()*-h, speed:Math.random()*1.6+0.6, alpha:Math.random()*0.35+0.1 });
+  }
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    ctx.font = '13px JetBrains Mono, monospace';
+    for(var i=0;i<drops.length;i++){
+      var d = drops[i];
+      d.y += d.speed;
+      if(d.y > h){ d.y = Math.random()*-100; }
+      var ch = chars[Math.floor(Math.random()*chars.length)];
+      ctx.fillStyle = 'rgba(0,230,255,'+d.alpha+')';
+      ctx.fillText(ch, d.x, d.y);
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
