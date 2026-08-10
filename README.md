@@ -2,7 +2,7 @@
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:6A5ACD,100:2E9EF7&height=200&section=header&text=Rishav%20Arya&fontSize=60&fontColor=fff&animation=fadeIn&fontAlignY=35&desc=Java%20%7C%20Spring%20Boot%20%7C%20React%20%7C%20Full%20Stack%20Developer&descAlignY=55&descSize=18" width="100%">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&pause=1000&color=6A5ACD&center=true&vCenter=true&width=600&lines=Full+Stack+Java+Developer;Spring+Boot+%7C+React.js+%7C+MySQL;Building+Enterprise-Grade+Systems;20%2C000%2B+Lines+of+Production+Java+Code" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&pause=1000&color=6A5ACD&center=true&vCenter=true&width=600&lines=Full+Stack+Developer;Spring+Boot+%7C+React.js+%7C+MySQL;Building+Enterprise-Grade+Systems;20%2C000%2B+Lines+of+Production+Java+Code" alt="Typing SVG" />
 
 </div>
 
@@ -26,7 +26,7 @@
 
 <img align="right" src="https://user-images.githubusercontent.com/74038190/213844263-a8897a51-32f4-4b3b-b5c2-e1528b89f6f3.gif" width="380">
 
-- 🎓 Pursuing **BCA** at Karim City College, Kolhan University, Jamshedpur
+- 🎓 **BCA** graduate from Kolhan University, Jharkhand
 - ☕ **Java Developer Intern** at Agamya Eduventure — built a 20,000+ line healthcare ERP system
 - 💻 Full Stack Developer specializing in **Java, Spring Boot & React.js**
 - 🏆 Ranked **#1 on GeeksforGeeks** among Kolhan University students
