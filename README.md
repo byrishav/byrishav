@@ -118,7 +118,6 @@ Food ordering platform with dynamic cart functionality, quantity management, and
 </tr>
 </table>
 
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 ## 📊 GitHub Stats
 
@@ -126,7 +125,7 @@ Food ordering platform with dynamic cart functionality, quantity management, and
 
 <img src="https://github-readme-stats.vercel.app/api?username=RishavArya&show_icons=true&theme=tokyonight&hide_border=true&border_radius=10&count_private=true" width="48%" />
 
-
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=RishavArya&theme=tokyonight&hide_border=true&border_radius=10" width="48%" />
 
 <br>
 
