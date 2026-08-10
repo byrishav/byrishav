@@ -123,7 +123,7 @@ Food ordering platform with dynamic cart functionality, quantity management, and
 
 <div align="center">
 
-<img src="https://github-readme-stats.vercel.app/api?username=RishavArya&show_icons=true&theme=tokyonight&hide_border=true&border_radius=10&count_private=true" width="48%" />
+
 
 <img src="https://github-readme-streak-stats.herokuapp.com/?user=RishavArya&theme=tokyonight&hide_border=true&border_radius=10" width="48%" />
 
