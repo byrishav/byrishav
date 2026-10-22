@@ -28,11 +28,10 @@
 
 - 🎓 **BCA** graduate from Kolhan University, Jharkhand
 - ☕ **Java Developer Intern** at Agamya Eduventure — built a 20,000+ line healthcare ERP system
-- 💻 Full Stack Developer specializing in **Java, Spring Boot & React.js**
+- 💻 Full Stack Developer specializing in ** ASP.NET , SQL Server , REST API , Java, Spring Boot & React.js**
 - 🏆 Ranked **#1 on GeeksforGeeks** among Kolhan University students
 - 📊 Solved **150+ DSA problems** across LeetCode and GeeksforGeeks
-- 🌱 Currently deepening expertise in **Spring Security, JWT & Microservices**
-- ⚡ Fun fact: I turn hospital chaos into clean, layered architecture
+- 🌱 Currently deepening expertise in **ASP.NET, JWT & Microservices**
 
 <br clear="right">
 
@@ -42,7 +41,7 @@
 
 **Languages & Core**
 
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![ASP.NET](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
