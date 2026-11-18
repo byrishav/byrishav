@@ -170,18 +170,6 @@ Hosting StockFlow on the cloud and refactoring it towards layered, service-based
 
 <br/>
 
-## 📊 Live GitHub Stats
-
-<div align="center">
-
-<img height="180" src="https://github-readme-stats.vercel.app/api?username=RishavArya&show_icons=true&theme=tokyonight&hide_border=true&border_radius=12&count_private=true" />
-<img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=RishavArya&layout=compact&theme=tokyonight&hide_border=true&border_radius=12&langs_count=8" />
-
-<br/>
-
-<img src="https://streak-stats.demolab.com?user=RishavArya&theme=tokyonight&hide_border=true&border_radius=12" width="70%" />
-
-</div>
 
 
 ## 🏆 Achievements
