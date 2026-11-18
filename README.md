@@ -183,13 +183,6 @@ Hosting StockFlow on the cloud and refactoring it towards layered, service-based
 
 </div>
 
-## 📈 Contribution Graph
-
-## 📈 Contribution Calendar
-
-<p align="center">
-  <img src="https://ghchart.rshah.org/6A5ACD/RishavArya" alt="RishavArya's GitHub contribution chart" width="100%" />
-</p>
 
 ## 🏆 Achievements
 
